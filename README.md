@@ -56,3 +56,6 @@ zookeeper.connect=192.168.11.111:2181,192.168.11.112:2181,192.168.11.113:2181
 
 #（6）kafka查看消费进度：（当我们需要查看一个消费者组的消费进度时，则使用下面的命令）
 > kafka-consumer-groups.sh --bootstrap-server 127.0.0.1:9092 --descirbe --group group1
+
+## 参考
+1. [Kafka入门经典教程](https://blog.csdn.net/hmsiwtv/article/details/46960053)
