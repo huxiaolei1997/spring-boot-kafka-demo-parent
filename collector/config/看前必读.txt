@@ -5,3 +5,6 @@ zookeeper 3.5.6版本
 kibana可以使用默认配置
 
 watcher已经集成在了x-pack里面，x-pack是收费的，不过有30天的试用
+
+需要注意es的时区，比东八区慢8个小时，另外配置watcher的时候要注意 验证查询语句是否能搜索到匹配的日志，因为如果我们没有实现定义好索引mapping,
+可能有些日志搜索不到，可以实现定义好logstash创建索引的mapping
