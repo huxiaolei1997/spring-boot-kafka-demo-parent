@@ -1,0 +1,1 @@
+在zk的data目录下创建myid文件，对应zoo-node1.cfg里面的server.1,server.2,server.3，值分别为1，2，3
