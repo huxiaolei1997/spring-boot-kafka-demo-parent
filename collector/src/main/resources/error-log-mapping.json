@@ -1,4 +1,4 @@
-#PUT _template/error-log-
+# PUT _template/error-log-
 {
   "template": "error-log-*",
   "order": 0,
@@ -8,66 +8,62 @@
     }
   },
   "mappings": {
-    "_default_": {
-      "dynamic_templates": [
-        {
-          "message_field": {
-            "match_mapping_type": "string",
-            "path_match": "message",
-            "mapping": {
-              "norms": false,
-              "type": "text",
-              "analyzer": "ik_max_word",
-              "search_analyzer": "ik_max_word"
-            }
+
+    "dynamic_templates": [
+      {
+        "message_field": {
+          "match_mapping_type": "string",
+          "path_match": "message",
+          "mapping": {
+            "norms": false,
+            "type": "text",
+            "analyzer": "ik_max_word",
+            "search_analyzer": "ik_max_word"
           }
-        },
-        {
-          "throwable_field": {
-            "match_mapping_type": "string",
-            "path_match": "throwable",
-            "mapping": {
-              "norms": false,
-              "type": "text",
-              "analyzer": "ik_max_word",
-              "search_analyzer": "ik_max_word"
-            }
+        }
+      },
+      {
+        "throwable_field": {
+          "match_mapping_type": "string",
+          "path_match": "throwable",
+          "mapping": {
+            "norms": false,
+            "type": "text",
+            "analyzer": "ik_max_word",
+            "search_analyzer": "ik_max_word"
           }
-        },
-        {
-          "string_fields": {
-            "match_mapping_type": "string",
-            "match": "*",
-            "mapping": {
-              "norms": false,
-              "type": "text",
-              "analyzer": "ik_max_word",
-              "search_analyzer": "ik_max_word",
-              "fields": {
-                "keyword": {
-                  "type": "keyword"
-                }
+        }
+      },
+      {
+        "string_fields": {
+          "match_mapping_type": "string",
+          "match": "*",
+          "mapping": {
+            "norms": false,
+            "type": "text",
+            "analyzer": "ik_max_word",
+            "search_analyzer": "ik_max_word",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
               }
             }
           }
         }
-      ],
-      "_all": {
-        "enabled": false
+      }
+    ],
+    "properties": {
+      "hostName": {
+        "type": "keyword"
       },
-      "properties": {         
-        "hostName": {
-          "type": "keyword"
-        },
-        "ip": {
-          "type": "ip"
-        },
-        "level": {
-          "type": "keyword"
-        },
-		"currentDateTime": {
-		  "type": "date"
-		}
+      "ip": {
+        "type": "ip"
+      },
+      "level": {
+        "type": "keyword"
+      },
+      "currentDateTime": {
+        "type": "date"
       }
     }
   }

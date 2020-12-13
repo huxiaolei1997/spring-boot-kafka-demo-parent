@@ -10,7 +10,9 @@ PUT _xpack/watcher/watch/error_log_collector_watcher
   "input": {
     "search": {
       "request": {
-        "indices": ["<error_log_collector-{now+8h/d}>"],
+        # 这样写不知道为什么不生效，参考 https://www.elastic.co/guide/en/elasticsearch/reference/current/date-math-index-names.html
+        #"indices": ["<error-log-collector-{now+8h/d{yyyy-MM-dd}}>"],
+        "indices": ["error_log_collector-*"],
         "body": {
           "size": 0,
           "query": {
@@ -45,9 +47,10 @@ PUT _xpack/watcher/watch/error_log_collector_watcher
   "transform": {
     "search": {
       "request": {
-        "indices": ["<error-log-collector-{now+8h/d}>"],
+        #"indices": ["<error-log-collector-{now+8h/d{yyyy-MM-dd}}>"],
+        "indices": ["error_log_collector-*"],
         "body": {
-          "size": 1,
+          "size": 0,
           "query": {
             "bool": {
               "must": [
@@ -87,7 +90,6 @@ PUT _xpack/watcher/watch/error_log_collector_watcher
         "headers": {
           "Content-Type": "application/json"
         },
-        "method" : "POST",
         "body" : "{\"title\": \"异常错误告警\", \"applicationName\": \"{{#ctx.payload.hits.hits}}{{_source.applicationName}}{{/ctx.payload.hits.hits}}\", \"level\":\"告警级别P1\", \"body\": \"{{#ctx.payload.hits.hits}}{{_source.messageInfo}}{{/ctx.payload.hits.hits}}\", \"executionTime\": \"{{#ctx.payload.hits.hits}}{{_source.currentDateTime}}{{/ctx.payload.hits.hits}}\"}"
       }
     }
