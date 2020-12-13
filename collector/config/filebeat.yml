@@ -1,0 +1,74 @@
+###################### Filebeat Configuration Example #########################
+
+# This file is an example configuration file highlighting only the most common
+# options. The filebeat.reference.yml file from the same directory contains all the
+# supported options with more comments. You can use it as a reference.
+#
+# You can find the full configuration reference here:
+# https://www.elastic.co/guide/en/beats/filebeat/index.html
+
+# For more available modules and options, please see the filebeat.reference.yml sample
+# configuration file.
+
+# ============================== Filebeat inputs ===============================
+
+filebeat.inputs:
+
+# Each - is an input. Most options can be set at the input level, so
+# you can use different inputs for various configurations.
+# Below are the input specific configurations.
+- type: log
+  # app-服务名称.log，为什么写死，防止发生轮转抓取历史数据
+  paths: 
+    - /Users/huxiaolei/IdeaProjects/spring-boot-kafka-demo-parent/logs/app-collector.log
+  document_type: "app-log"
+  multiline: 
+    # 一般以中括号开头为一条日志，具体规则我们可以自己定义
+    pattern: '^\['
+    # 是否匹配到
+    negate: true
+    # 合并到上一行的末尾 
+    match: after
+    # 最大的行数，一般日志
+    max_lines: 2000
+    # 如果在规定的时间没有新的日志事件就不等待后面的日志
+    timeout: 2s
+  fields:
+    logbiz: collector
+    logtopic: app-log-collector ## 按服务划分，用作kafka topic
+    # 环境标识
+    evn: dev
+
+
+- type: log
+  # app-服务名称.log，为什么写死，防止发生轮转抓取历史数据
+  paths: 
+    - /Users/huxiaolei/IdeaProjects/spring-boot-kafka-demo-parent/logs/error-collector.log
+  document_type: "error-log"
+  multiline:
+    # 一般以中括号开头为一条日志，具体规则我们可以自己定义
+    pattern: '^\['
+    # 是否匹配到
+    negate: true
+    # 合并到上一行的末尾 
+    match: after
+    # 最大的行数，一般日志
+    max_lines: 2000
+    # 如果在规定的时间没有新的日志事件就不等待后面的日志
+    timeout: 2s
+  fields:
+    logbiz: collector
+    logtopic: error-log-collector ## 按服务划分，用作kafka topic
+    evn: dev
+
+output.kafka: 
+  enabled: true
+  hosts: ["127.0.0.1:9092"]
+  topic: '%{[fields.logtopic]}'
+  partition.hash:
+    reachable_only: true
+    compression: gzip
+    max_message_bytes: 1000000
+    required_acks: 1
+logging.to_files: true
+

@@ -17,6 +17,7 @@
     <modules>
         <module>spring-boot-kafka-demo-producer</module>
         <module>spring-boot-kafka-demo-consumer</module>
+        <module>collector</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
@@ -24,6 +25,18 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.lmax</groupId>
+                <artifactId>disruptor</artifactId>
+                <version>3.3.4</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.2.58</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
