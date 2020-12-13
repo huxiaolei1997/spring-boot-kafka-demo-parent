@@ -1,3 +1,5 @@
 kafka 2.12-2.1.0版本
 logstash Elasticsearch kibana filebeat 7.10.0版本
 zookeeper 3.5.6版本
+
+kibana可以使用默认配置
