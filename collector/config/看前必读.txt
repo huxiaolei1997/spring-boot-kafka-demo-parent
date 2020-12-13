@@ -3,3 +3,5 @@ logstash Elasticsearch kibana filebeat 7.10.0版本
 zookeeper 3.5.6版本
 
 kibana可以使用默认配置
+
+watcher已经集成在了x-pack里面，x-pack是收费的，不过有30天的试用
